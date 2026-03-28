@@ -1,41 +1,0 @@
-===== Fri Mar 20 11:16:32 AM +07 2026 =====
-SOURCE=torch_synth_1000 VERSION=v_0_4_0
-/home/minhln14/anaconda3/envs/libevolutioneval/lib/python3.9/site-packages/fuzzywuzzy/fuzz.py:11: UserWarning: Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning
-  warnings.warn('Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning')
-2026-03-20 11:16:34,085 -- INFO: Reading from: ./data/eval_examples/./torch_synth_1000/v_0_4_0.jsonl
-2026-03-20 11:16:34,085 -- INFO: Generating to: ./results_debug_smoke/codesage_num_ret_3_conf_thresh_0.0/eval_examples/./mistral/torch_synth_1000/task_v_0_4_0_doc_v_0_4_0.jsonl
-2026-03-20 11:16:34,104 -- INFO: Loading APIs from: ./data/package_apis/torch/v_0_4_0.jsonl
-2026-03-20 11:16:34,111 -- INFO: Load pretrained SentenceTransformer: ./codesage-small-v2
-Loading APIs from: ./data/package_apis/torch/v_0_4_0.jsonl
-Batches:   0%|          | 0/50 [00:00<?, ?it/s]Batches:   2%|▏         | 1/50 [00:00<00:07,  6.15it/s]Batches:   4%|▍         | 2/50 [00:00<00:07,  6.76it/s]Batches:   6%|▌         | 3/50 [00:00<00:06,  6.96it/s]Batches:   8%|▊         | 4/50 [00:00<00:06,  7.56it/s]Batches:  10%|█         | 5/50 [00:00<00:05,  7.81it/s]Batches:  12%|█▏        | 6/50 [00:00<00:05,  7.90it/s]Batches:  14%|█▍        | 7/50 [00:00<00:05,  8.28it/s]Batches:  16%|█▌        | 8/50 [00:01<00:05,  8.26it/s]Batches:  20%|██        | 10/50 [00:01<00:04,  9.00it/s]Batches:  24%|██▍       | 12/50 [00:01<00:03,  9.59it/s]Batches:  26%|██▌       | 13/50 [00:01<00:04,  9.23it/s]Batches:  30%|███       | 15/50 [00:01<00:03,  9.77it/s]Batches:  34%|███▍      | 17/50 [00:01<00:03, 10.17it/s]Batches:  38%|███▊      | 19/50 [00:02<00:02, 10.98it/s]Batches:  42%|████▏     | 21/50 [00:02<00:02, 11.70it/s]Batches:  46%|████▌     | 23/50 [00:02<00:02, 12.77it/s]Batches:  50%|█████     | 25/50 [00:02<00:01, 14.11it/s]Batches:  54%|█████▍    | 27/50 [00:02<00:01, 15.48it/s]Batches:  58%|█████▊    | 29/50 [00:02<00:01, 16.55it/s]Batches:  64%|██████▍   | 32/50 [00:02<00:00, 18.10it/s]Batches:  70%|███████   | 35/50 [00:02<00:00, 19.21it/s]Batches:  76%|███████▌  | 38/50 [00:03<00:00, 20.05it/s]Batches:  82%|████████▏ | 41/50 [00:03<00:00, 21.52it/s]Batches:  90%|█████████ | 45/50 [00:03<00:00, 25.03it/s]Batches: 100%|██████████| 50/50 [00:03<00:00, 14.70it/s]
-Generating:   0%|          | 0/10 [00:00<?, ?it/s]
-Batches:   0%|          | 0/1 [00:00<?, ?it/s][ABatches: 100%|██████████| 1/1 [00:00<00:00, 55.09it/s]
-
-Batches:   0%|          | 0/1 [00:00<?, ?it/s][ABatches: 100%|██████████| 1/1 [00:00<00:00, 12.60it/s]
-Generating:  20%|██        | 2/10 [00:00<00:00, 19.66it/s]
-Batches:   0%|          | 0/1 [00:00<?, ?it/s][ABatches: 100%|██████████| 1/1 [00:00<00:00, 55.98it/s]
-
-Batches:   0%|          | 0/1 [00:00<?, ?it/s][ABatches: 100%|██████████| 1/1 [00:00<00:00, 54.11it/s]
-
-Batches:   0%|          | 0/1 [00:00<?, ?it/s][ABatches: 100%|██████████| 1/1 [00:00<00:00, 11.30it/s]
-Generating:  50%|█████     | 5/10 [00:00<00:00, 21.64it/s]
-Batches:   0%|          | 0/1 [00:00<?, ?it/s][ABatches: 100%|██████████| 1/1 [00:00<00:00, 27.38it/s]
-
-Batches:   0%|          | 0/1 [00:00<?, ?it/s][ABatches: 100%|██████████| 1/1 [00:00<00:00, 13.08it/s]
-
-Batches:   0%|          | 0/1 [00:00<?, ?it/s][ABatches: 100%|██████████| 1/1 [00:00<00:00, 14.90it/s]
-Generating:  80%|████████  | 8/10 [00:00<00:00, 17.90it/s]
-Batches:   0%|          | 0/1 [00:00<?, ?it/s][ABatches: 100%|██████████| 1/1 [00:00<00:00, 11.95it/s]
-
-Batches:   0%|          | 0/1 [00:00<?, ?it/s][ABatches: 100%|██████████| 1/1 [00:00<00:00, 12.90it/s]
-Generating: 100%|██████████| 10/10 [00:00<00:00, 15.39it/s]Generating: 100%|██████████| 10/10 [00:00<00:00, 16.66it/s]
-/home/minhln14/anaconda3/envs/libevolutioneval/lib/python3.9/site-packages/fuzzywuzzy/fuzz.py:11: UserWarning: Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning
-  warnings.warn('Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning')
-Loading API info:   0%|          | 0/1 [00:00<?, ?it/s]Loading API info: 100%|██████████| 1/1 [00:00<00:00, 164.64it/s]
-2026-03-20 11:16:40,628 -- INFO: Reading from ./results_debug_smoke/codesage_num_ret_3_conf_thresh_0.0/eval_examples/./mistral/torch_synth_1000/task_v_0_4_0_doc_v_0_4_0.jsonl
-Traceback (most recent call last):
-  File "/media/minhln14/D/nhatanh_test/LibEvolutionEval-main/evaluate.py", line 520, in <module>
-    main_score_generations(
-  File "/media/minhln14/D/nhatanh_test/LibEvolutionEval-main/evaluate.py", line 410, in main_score_generations
-    elif r["meta_data"]["right_context"] is not None:
-KeyError: 'meta_data'
