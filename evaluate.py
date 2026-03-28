@@ -92,56 +92,93 @@ def extract_generation(input_string, prefix_special_token: str = "<fim_middle>",
     return extracted_text
 
 def generate_code_completion(
-        model,
-        tokenizer,
-        prompt,
-        hint_to_prompt,
-        right_context,
-        max_new_tokens=512,
-        new_scope_started=False,
-        imports=[],
-        source="torch",
-        base_model_name="starcoder2-7b",
-):
-    ollama_url = "http://localhost:11434/api/generate"
+        model: Any, 
+        tokenizer: Any, 
+        prompt: str,  # Base prompt for code generation
+        hint_to_prompt: str,  # Code hint to append to prompt
+        right_context: str,  # Right context for fill-in-the-middle models
+        max_new_tokens: int = 512,
+        new_scope_started: bool = False,
+        imports: list = [],
+        source: str = "torch",
+        base_model_name: str = "mistral",
+) -> Tuple:
+    """Generate code completion up to the first API call.
+    
+    Args:
+        model: The language model for generation
+        tokenizer: Tokenizer for the model
+        prompt: Base prompt for code generation
+        hint_to_prompt: Code hint to append to prompt
+        right_context: Right context for fill-in-the-middle models
+        max_new_tokens: Maximum number of tokens to generate
+        new_scope_started: Whether generation starts a new scope
+        imports: List of imported modules
+        source: Source library (e.g., "torch")
+        base_model_name: Name of the base model
+        
+    Returns:
+        Tuple containing (api_call, full_generation)
+    """
+    hinted_prompt = prompt + hint_to_prompt
 
-    left_context = prompt + hint_to_prompt
-    if right_context:
-        input_prompt = prompt_wrapper(left_context, right_context)
+    if "starcoder" in base_model_name:
+        input_text = prompt_wrapper(hinted_prompt, right_context)
     else:
-        input_prompt = left_context
+        #mistral has no right context
+        input_text = hinted_prompt
 
-    payload = {
-        "model": "mistral",
-        "prompt": input_prompt,
-        "raw": True,
-        "stream": False,
-        "options": {
-            "num_predict": 128,
-            "num_ctx": 8192,
-            "temperature": 0
-        }
-    }
+    #need to fix truncation
+    input_text = truncate_prompt(input_text, tokenizer=tokenizer, max_len=6144)
+    tokenized = tokenizer(input_text, return_tensors="pt")
 
+    new_text = ""
+    new_token_count = 0
+    input_length = len(tokenized.input_ids[0])
+    max_new_tokens = min(max_new_tokens, MODEL_MAX_LEN - len(tokenized.input_ids[0]))
+    ret_str = ""
+
+    attn_mask = tokenized.attention_mask
+    input_ids = tokenized.input_ids
+
+    # generate a response
     try:
-        session = requests.Session()
-        session.trust_env = False
-        response = session.post(ollama_url, json=payload, timeout=1500)
-        response.raise_for_status()
+        with torch.no_grad():
+            output = model.generate(
+                input_ids.to(model.device),
+                attention_mask=attn_mask.to(model.device),
+                do_sample=False,
+                pad_token_id=tokenizer.pad_token_id,
+                max_new_tokens=max_new_tokens, # Use the argument passed to the function
+                output_scores=True,
+                return_dict_in_generate=True
+            )
 
-        result = response.json()
-        generation = result.get("response", "")
+        output = output["sequences"].cpu()
+        output_tokens = output[0]
+        this_new_tokens = output_tokens[len(input_ids[0]):]
+        new_token_count = len(this_new_tokens)
+        if "starcoder" in base_model_name:
+            this_new_text = tokenizer.decode(output_tokens, skip_special_tokens=False)
+        else:
+            this_new_text = tokenizer.decode(this_new_tokens, skip_special_tokens=False)
+
+        if "starcoder" in base_model_name:
+            generation = hint_to_prompt + extract_generation(this_new_text)
+        else:
+            generation = hint_to_prompt + this_new_text
 
         this_has_new_api_call, ret_str = has_new_api_call(
-            generation,
-            new_scope_started=new_scope_started,
-            imports=imports
+            generation, new_scope_started=new_scope_started, imports=imports
         )
     except Exception as e:
-        logging.error(f"Ollama API error: {str(e)}", exc_info=True)
+        logging.error(f"An error occurred during generation: {str(e)}", exc_info=True)
         generation = ""
         this_has_new_api_call, ret_str = False, ""
 
+    if this_has_new_api_call:
+        return (ret_str, generation)
+    # if no API call found return complete generation
     return (ret_str, generation)
 
 def generate_for_sample(
