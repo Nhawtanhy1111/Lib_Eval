@@ -10,19 +10,15 @@ from retriever import CodeSageRetriever
 
 
 def augment_prompt(task: Dict, retrieved: List[Tuple[Dict, float]]) -> Dict:
-    """
-    Helper to augment prompt with retrieved docs (Torch-style schema).
-    Works for both torch and matplotlib once the latter is converted.
-    """
     augmentation = "# Use the following API information as reference:\n"
 
     for ret_pair in retrieved:
-        ret = ret_pair[0]  # ignore score
-
-        # Torch-style schema access (works for converted Matplotlib too)
+        ret = ret_pair[0]
         api_name = ret.get("API_Call", "Unknown API")
-        signature = (ret.get("Signature", "") or "").replace("[source]\u00b6", "").replace("[source]", "").replace("\u00b6", "")
-        detailed_desc = ret.get("Detailed_Description", "")
+        signature = ret.get("Signature", "")
+        
+        # Check for your new field here:
+        detailed_desc = ret.get("Api_Description") or ret.get("Detailed_Description", "")
 
         block = f"{api_name} : {signature}\n"
 
@@ -35,9 +31,9 @@ def augment_prompt(task: Dict, retrieved: List[Tuple[Dict, float]]) -> Dict:
 
         # Optional short description (first non-empty line)
         if isinstance(detailed_desc, str) and detailed_desc.strip():
-            first_line = detailed_desc.strip().split("\n", 1)[0].strip()
-            if first_line:
-                block += f"Description : {first_line}\n"
+                    # Instead of just taking the first line, you may want the whole 
+                    # instruction if it contains the "condition" mentioned in your example
+            block += f"Description: {detailed_desc.strip()}\n"
 
         block += "\n" + ("=" * 20) + "\n"
 
