@@ -25,7 +25,7 @@ def prepare_key(api_dict: Dict, normalize: bool = False) -> str:
     # --- Map to a unified schema (works even if matplotlib wasn't pre-converted) ---
     api_call = api_dict.get("API_Call") or api_dict.get("API_Name") or "Unknown API Call"
     signature = _clean_signature(api_dict.get("Signature", "No signature available."))
-    description = api_dict.get("Detailed_Description", "No description available.")
+    description = api_dict.get("Api_Description") or api_dict.get("Detailed_Description", "")
     params = api_dict.get("Parameters") or {}
 
     # Ensure types we expect
