@@ -1,0 +1,43 @@
+===== Fri Mar 20 10:51:25 AM +07 2026 =====
+SOURCE=torch_direct_api VERSION=v_1_10_0
+/home/minhln14/anaconda3/envs/libevolutioneval/lib/python3.9/site-packages/fuzzywuzzy/fuzz.py:11: UserWarning: Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning
+  warnings.warn('Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning')
+2026-03-20 10:51:27,089 -- INFO: Reading from: ./data/eval_examples/./torch_direct_api/v_1_10_0.jsonl
+2026-03-20 10:51:27,089 -- INFO: Generating to: ./results_all/no_augmentation/eval_examples/./mistral/torch_direct_api/task_v_1_10_0_doc_v_1_10_0.jsonl
+2026-03-20 10:51:27,239 -- INFO: Loading APIs from: ./data/package_apis/torch/v_1_10_0.jsonl
+Loading APIs from: ./data/package_apis/torch/v_1_10_0.jsonl
+Generating:   0%|          | 0/708 [00:00<?, ?it/s]Generating:   0%|          | 1/708 [00:13<2:44:35, 13.97s/it]Generating:   0%|          | 2/708 [00:21<2:00:17, 10.22s/it]Generating:   0%|          | 3/708 [00:34<2:13:05, 11.33s/it]Generating:   0%|          | 3/708 [00:41<2:41:17, 13.73s/it]
+Traceback (most recent call last):
+  File "/media/minhln14/D/nhatanh_test/LibEvolutionEval-main/evaluate.py", line 504, in <module>
+    main_generate(
+  File "/media/minhln14/D/nhatanh_test/LibEvolutionEval-main/evaluate.py", line 305, in main_generate
+    ret = generate_with_retrieval_for_sample(
+  File "/media/minhln14/D/nhatanh_test/LibEvolutionEval-main/evaluate.py", line 232, in generate_with_retrieval_for_sample
+    generate_response = generate_for_sample(
+  File "/media/minhln14/D/nhatanh_test/LibEvolutionEval-main/evaluate.py", line 163, in generate_for_sample
+    response = generate_code_completion(
+  File "/media/minhln14/D/nhatanh_test/LibEvolutionEval-main/evaluate.py", line 129, in generate_code_completion
+    response = session.post(ollama_url, json=payload, timeout=1500)
+  File "/home/minhln14/anaconda3/envs/libevolutioneval/lib/python3.9/site-packages/requests/sessions.py", line 637, in post
+    return self.request("POST", url, data=data, json=json, **kwargs)
+  File "/home/minhln14/anaconda3/envs/libevolutioneval/lib/python3.9/site-packages/requests/sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/minhln14/anaconda3/envs/libevolutioneval/lib/python3.9/site-packages/requests/sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/minhln14/anaconda3/envs/libevolutioneval/lib/python3.9/site-packages/requests/adapters.py", line 644, in send
+    resp = conn.urlopen(
+  File "/home/minhln14/anaconda3/envs/libevolutioneval/lib/python3.9/site-packages/urllib3/connectionpool.py", line 787, in urlopen
+    response = self._make_request(
+  File "/home/minhln14/anaconda3/envs/libevolutioneval/lib/python3.9/site-packages/urllib3/connectionpool.py", line 534, in _make_request
+    response = conn.getresponse()
+  File "/home/minhln14/anaconda3/envs/libevolutioneval/lib/python3.9/site-packages/urllib3/connection.py", line 571, in getresponse
+    httplib_response = super().getresponse()
+  File "/home/minhln14/anaconda3/envs/libevolutioneval/lib/python3.9/http/client.py", line 1377, in getresponse
+    response.begin()
+  File "/home/minhln14/anaconda3/envs/libevolutioneval/lib/python3.9/http/client.py", line 320, in begin
+    version, status, reason = self._read_status()
+  File "/home/minhln14/anaconda3/envs/libevolutioneval/lib/python3.9/http/client.py", line 281, in _read_status
+    line = str(self.fp.readline(_MAXLINE + 1), "iso-8859-1")
+  File "/home/minhln14/anaconda3/envs/libevolutioneval/lib/python3.9/socket.py", line 716, in readinto
+    return self._sock.recv_into(b)
+KeyboardInterrupt

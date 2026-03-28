@@ -1,0 +1,17 @@
+name: libevolutioneval
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9
+  - pip
+  - numpy
+  - tqdm
+  - pip:
+    - torch==2.3.1
+    - transformers==4.42.4
+    - accelerate==0.34.2
+    - tree-sitter==0.23.2
+    - tree-sitter-python==0.23.2
+    - timeout-decorator==0.5.0
+    - fuzzywuzzy==0.18.0
+    - nltk==3.9.1

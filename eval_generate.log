@@ -1,0 +1,8 @@
+nohup: ignoring input
+/home/minhln14/anaconda3/envs/libevolutioneval/lib/python3.9/site-packages/fuzzywuzzy/fuzz.py:11: UserWarning: Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning
+  warnings.warn('Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning')
+2026-03-20 10:09:55,500 -- INFO: Reading from: ./data/eval_examples/./torch_direct_api/v_2_0_0.jsonl
+2026-03-20 10:09:55,500 -- INFO: Generating to: ./results/no_augmentation/eval_examples/./mistral/torch_direct_api/task_v_2_0_0_doc_v_2_0_0.jsonl
+2026-03-20 10:09:55,647 -- INFO: Loading APIs from: ./data/package_apis/torch/v_2_0_0.jsonl
+Loading APIs from: ./data/package_apis/torch/v_2_0_0.jsonl
+Generating:   0%|          | 0/10 [00:00<?, ?it/s]Generating:  10%|█         | 1/10 [00:36<05:26, 36.28s/it]Generating:  20%|██        | 2/10 [00:50<03:05, 23.13s/it]Generating:  30%|███       | 3/10 [01:09<02:29, 21.40s/it]Generating:  40%|████      | 4/10 [01:37<02:24, 24.02s/it]Generating:  50%|█████     | 5/10 [02:05<02:06, 25.36s/it]Generating:  60%|██████    | 6/10 [02:38<01:52, 28.01s/it]Generating:  70%|███████   | 7/10 [03:06<01:24, 28.05s/it]Generating:  80%|████████  | 8/10 [03:21<00:47, 23.99s/it]Generating:  90%|█████████ | 9/10 [03:35<00:20, 20.73s/it]Generating: 100%|██████████| 10/10 [03:49<00:00, 18.71s/it]Generating: 100%|██████████| 10/10 [03:49<00:00, 22.97s/it]

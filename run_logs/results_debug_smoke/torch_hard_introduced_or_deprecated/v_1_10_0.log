@@ -1,0 +1,41 @@
+===== Fri Mar 20 11:10:46 AM +07 2026 =====
+SOURCE=torch_hard_introduced_or_deprecated VERSION=v_1_10_0
+/home/minhln14/anaconda3/envs/libevolutioneval/lib/python3.9/site-packages/fuzzywuzzy/fuzz.py:11: UserWarning: Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning
+  warnings.warn('Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning')
+2026-03-20 11:10:48,675 -- INFO: Reading from: ./data/eval_examples/./torch_hard_introduced_or_deprecated/v_1_10_0.jsonl
+2026-03-20 11:10:48,675 -- INFO: Generating to: ./results_debug_smoke/codesage_num_ret_3_conf_thresh_0.0/eval_examples/./mistral/torch_hard_introduced_or_deprecated/task_v_1_10_0_doc_v_1_10_0.jsonl
+2026-03-20 11:10:48,683 -- INFO: Loading APIs from: ./data/package_apis/torch/v_1_10_0.jsonl
+2026-03-20 11:10:48,706 -- INFO: Load pretrained SentenceTransformer: ./codesage-small-v2
+Loading APIs from: ./data/package_apis/torch/v_1_10_0.jsonl
+Batches:   0%|          | 0/50 [00:00<?, ?it/s]Batches:   2%|▏         | 1/50 [00:00<00:08,  6.09it/s]Batches:   4%|▍         | 2/50 [00:00<00:07,  6.66it/s]Batches:   6%|▌         | 3/50 [00:00<00:06,  7.35it/s]Batches:   8%|▊         | 4/50 [00:00<00:05,  7.79it/s]Batches:  10%|█         | 5/50 [00:00<00:05,  8.19it/s]Batches:  14%|█▍        | 7/50 [00:00<00:04,  9.71it/s]Batches:  18%|█▊        | 9/50 [00:00<00:03, 10.56it/s]Batches:  22%|██▏       | 11/50 [00:01<00:03, 11.30it/s]Batches:  26%|██▌       | 13/50 [00:01<00:03, 11.82it/s]Batches:  30%|███       | 15/50 [00:01<00:02, 13.54it/s]Batches:  36%|███▌      | 18/50 [00:01<00:02, 15.83it/s]Batches:  42%|████▏     | 21/50 [00:01<00:01, 17.75it/s]Batches:  48%|████▊     | 24/50 [00:01<00:01, 19.15it/s]Batches:  54%|█████▍    | 27/50 [00:01<00:01, 20.35it/s]Batches:  60%|██████    | 30/50 [00:02<00:00, 20.97it/s]Batches:  66%|██████▌   | 33/50 [00:02<00:00, 21.52it/s]Batches:  72%|███████▏  | 36/50 [00:02<00:00, 22.71it/s]Batches:  80%|████████  | 40/50 [00:02<00:00, 26.48it/s]Batches:  88%|████████▊ | 44/50 [00:02<00:00, 29.80it/s]Batches:  98%|█████████▊| 49/50 [00:02<00:00, 33.81it/s]Batches: 100%|██████████| 50/50 [00:02<00:00, 18.70it/s]
+Generating:   0%|          | 0/10 [00:00<?, ?it/s]
+Batches:   0%|          | 0/1 [00:00<?, ?it/s][ABatches: 100%|██████████| 1/1 [00:00<00:00, 22.81it/s]
+Generating:  10%|█         | 1/10 [00:14<02:14, 14.89s/it]
+Batches:   0%|          | 0/1 [00:00<?, ?it/s][ABatches: 100%|██████████| 1/1 [00:00<00:00, 39.57it/s]
+Generating:  20%|██        | 2/10 [00:20<01:15,  9.46s/it]
+Batches:   0%|          | 0/1 [00:00<?, ?it/s][ABatches: 100%|██████████| 1/1 [00:00<00:00, 47.85it/s]
+Generating:  30%|███       | 3/10 [00:43<01:48, 15.44s/it]
+Batches:   0%|          | 0/1 [00:00<?, ?it/s][ABatches: 100%|██████████| 1/1 [00:00<00:00, 47.31it/s]
+Generating:  40%|████      | 4/10 [01:08<01:55, 19.30s/it]
+Batches:   0%|          | 0/1 [00:00<?, ?it/s][ABatches: 100%|██████████| 1/1 [00:00<00:00, 40.79it/s]
+Generating:  50%|█████     | 5/10 [01:22<01:28, 17.60s/it]
+Batches:   0%|          | 0/1 [00:00<?, ?it/s][ABatches: 100%|██████████| 1/1 [00:00<00:00, 49.43it/s]
+Generating:  60%|██████    | 6/10 [01:37<01:06, 16.58s/it]
+Batches:   0%|          | 0/1 [00:00<?, ?it/s][ABatches: 100%|██████████| 1/1 [00:00<00:00, 42.56it/s]
+Generating:  70%|███████   | 7/10 [01:52<00:47, 15.98s/it]
+Batches:   0%|          | 0/1 [00:00<?, ?it/s][ABatches: 100%|██████████| 1/1 [00:00<00:00, 32.33it/s]
+Generating:  80%|████████  | 8/10 [02:06<00:30, 15.38s/it]
+Batches:   0%|          | 0/1 [00:00<?, ?it/s][ABatches: 100%|██████████| 1/1 [00:00<00:00, 43.84it/s]
+Generating:  90%|█████████ | 9/10 [02:22<00:15, 15.72s/it]
+Batches:   0%|          | 0/1 [00:00<?, ?it/s][ABatches: 100%|██████████| 1/1 [00:00<00:00, 48.19it/s]
+Generating: 100%|██████████| 10/10 [02:37<00:00, 15.45s/it]Generating: 100%|██████████| 10/10 [02:37<00:00, 15.77s/it]
+/home/minhln14/anaconda3/envs/libevolutioneval/lib/python3.9/site-packages/fuzzywuzzy/fuzz.py:11: UserWarning: Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning
+  warnings.warn('Using slow pure-python SequenceMatcher. Install python-Levenshtein to remove this warning')
+Loading API info:   0%|          | 0/1 [00:00<?, ?it/s]Loading API info: 100%|██████████| 1/1 [00:00<00:00, 42.79it/s]
+2026-03-20 11:13:31,627 -- INFO: Reading from ./results_debug_smoke/codesage_num_ret_3_conf_thresh_0.0/eval_examples/./mistral/torch_hard_introduced_or_deprecated/task_v_1_10_0_doc_v_1_10_0.jsonl
+post-processing samples ...
+  0%|          | 0/10 [00:00<?, ?it/s] 10%|█         | 1/10 [00:00<00:01,  6.93it/s] 30%|███       | 3/10 [00:01<00:02,  2.81it/s] 40%|████      | 4/10 [00:01<00:02,  2.38it/s] 50%|█████     | 5/10 [00:01<00:01,  3.16it/s] 60%|██████    | 6/10 [00:01<00:01,  3.91it/s]100%|██████████| 10/10 [00:01<00:00,  5.34it/s]
+2026-03-20 11:13:33,623 -- INFO: Code Matching: EM 0.00, ES 11.60
+2026-03-20 11:13:33,623 -- INFO: ID matching: EM 0.00, Precision 7.64, Recall 17.46, F1 10.63
+2026-03-20 11:13:33,653 -- INFO: DetailedResults written to ./results_debug_smoke/codesage_num_ret_3_conf_thresh_0.0/eval_examples/./mistral/torch_hard_introduced_or_deprecated/task_v_1_10_0_doc_v_1_10_0_detailed_results.jsonl
+2026-03-20 11:13:33,654 -- INFO: Results written to ./results_debug_smoke/codesage_num_ret_3_conf_thresh_0.0/eval_examples/./mistral/torch_hard_introduced_or_deprecated/task_v_1_10_0_doc_v_1_10_0_results.jsonl
