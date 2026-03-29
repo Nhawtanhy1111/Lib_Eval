@@ -8,7 +8,8 @@ import torch.utils.checkpoint
 from torch import nn
 from torch.nn import CrossEntropyLoss, MSELoss, BCEWithLogitsLoss
 from transformers.activations import ACT2FN
-from transformers.modeling_utils import Conv1D, PreTrainedModel
+from transformers.pytorch_utils import Conv1D
+from transformers.modeling_utils import PreTrainedModel
 from transformers.utils import logging
 from .config_codesage import CodeSageConfig
 from transformers.modeling_outputs import (

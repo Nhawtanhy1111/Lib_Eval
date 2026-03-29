@@ -25,8 +25,12 @@ def prepare_key(api_dict: Dict, normalize: bool = False) -> str:
     # --- Map to a unified schema (works even if matplotlib wasn't pre-converted) ---
     api_call = api_dict.get("API_Call") or api_dict.get("API_Name") or "Unknown API Call"
     signature = _clean_signature(api_dict.get("Signature", "No signature available."))
-    description = api_dict.get("Api_Description") or api_dict.get("Detailed_Description", "")
+    description = api_dict.get("Detailed_Description", "No description available.")
     params = api_dict.get("Parameters") or {}
+
+    enriched_desc = api_dict.get("Api_Description", "")
+    if enriched_desc and enriched_desc != "Description not found in package APIs.":
+        description = f"{enriched_desc}\n{description}"
 
     # Ensure types we expect
     if not isinstance(description, str):
@@ -34,6 +38,7 @@ def prepare_key(api_dict: Dict, normalize: bool = False) -> str:
     if not isinstance(params, dict):
         params = {}
 
+    params = api_dict.get("Parameters") or {}
     # --- Build a consistent key body (same for torch & matplotlib) ---
     # 1) Signature line
     # 2) Inputs (names only, concise)
@@ -76,11 +81,13 @@ def prepare_query(
     use_prompt: bool = False,
     use_comment_str: bool = False,
     use_code_str: bool = False,
+    use_api_description: bool = False,
 ) -> str:
     prompt = "\n".join(generation_dict.get("prompt", "").split("\n")[-5:])
     hypothesis = generation_dict.get("hypothesis", "")
     comment_str = generation_dict.get("comment_str", "")
     code_str = generation_dict.get("code_str", "")
+    api_description = generation_dict.get("Api_Description", "") # Add this
 
     if normalize:
         func = normalize_text
@@ -98,6 +105,8 @@ def prepare_query(
         parts.append(comment_str)
     if use_code_str:
         parts.append(code_str)
+    if use_api_description and api_description:
+        parts.append(api_description)
 
     query = "\n".join([p for p in parts if p])
     return func(query)

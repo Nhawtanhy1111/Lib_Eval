@@ -24,9 +24,9 @@ try:
     from nltk.tokenize import RegexpTokenizer
     code_tokenizer = RegexpTokenizer(r'\w+')
 except ImportError:
-    # Simple fallback tokenizer when NLTK is not available
+    # Fix: Add a placeholder argument (like '_' or 'self') to the lambda
     code_tokenizer = type('SimpleTokenizer', (), {
-        'tokenize': lambda text: text.split() if text else []
+        'tokenize': lambda _, text: text.split() if text else []
     })()
 
 # Tree-sitter language setup
