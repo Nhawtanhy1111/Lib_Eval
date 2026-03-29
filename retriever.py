@@ -105,8 +105,6 @@ def prepare_query(
         parts.append(comment_str)
     if use_code_str:
         parts.append(code_str)
-    if use_api_description and api_description:
-        parts.append(api_description)
 
     query = "\n".join([p for p in parts if p])
     return func(query)
@@ -148,7 +146,7 @@ import numpy as np
 class CodeSageRetriever(BaseRetriever):
     def __init__(
         self,
-        model_name="./codesage-small-v2",
+        model_name="./codesage-large-v2",
         batch_size=2,
         max_seq_length=256,
         device="cpu",

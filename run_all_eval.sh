@@ -16,14 +16,17 @@ USE_RETRIEVAL=1
 RETRIEVAL_TYPE="codesage"
 NUM_TO_RETRIEVE=3
 
-# Directory where evaluate.py saves results (matches the dynamic naming in your python script)
-RETRIEVAL_DIR="${RETRIEVAL_TYPE}_num_ret_${NUM_TO_RETRIEVE}_conf_thresh_0.0"
-
 # Versions to process
-VERSIONS=("v_1_6_0" "v_1_10_0" "v_2_0_0")
+VERSIONS=("v_1_1_0" "v_1_2_0" "v_1_4_0" "v_1_6_0" "v_1_8_0" "v_1_10_0" "v_2_0_0")
 
 LOG_ROOT="$ROOT/run_logs/$SETTING"
 mkdir -p "$LOG_ROOT"
+
+# Ensure 'bc' is installed for average calculation
+if ! command -v bc &> /dev/null; then
+    echo "Error: 'bc' is not installed. Install it with: sudo apt-get install bc"
+    exit 1
+fi
 
 # --- HELPER: Summarize folder results ---
 summarize_folder() {
@@ -66,9 +69,18 @@ PY
 }
 
 # --- MAIN LOOP ---
-echo "Starting Enriched Evaluation Pipeline..."
+echo "Starting Enriched Evaluation Pipeline for ${#VERSIONS[@]} versions..."
 
 for V in "${VERSIONS[@]}"; do
+    # Check if required data files exist
+    TASK_FILE="./data/eval_examples/$SOURCE/${V}_enriched.jsonl"
+    DOC_FILE="./data/package_apis/torch/${V}.jsonl"
+
+    if [[ ! -f "$TASK_FILE" || ! -f "$DOC_FILE" ]]; then
+        echo "[-] Skipping $V: Missing data files."
+        continue
+    fi
+
     echo "========================================"
     echo ">>> PROCESSING VERSION: $V"
     echo "========================================"
@@ -77,8 +89,6 @@ for V in "${VERSIONS[@]}"; do
     
     {
       echo "--- STARTING GENERATION: $(date) ---"
-      # api_version = base version for doc lookup
-      # task_version = enriched version for prompt lookup
       python evaluate.py \
           --model "$MODEL" \
           --use_ollama \
@@ -107,16 +117,10 @@ for V in "${VERSIONS[@]}"; do
           --num_to_retrieve "$NUM_TO_RETRIEVE" \
           --setting_desc_variable "$SETTING"
           
-    } > "$LOG_FILE" 2>&1
+    } > "$LOG_FILE" 2>&1 || echo "Warning: Error processing $V. Check $LOG_FILE"
     
     echo "Finished $V. Logs saved to $LOG_FILE"
 done
-
-# Run folder summarization for the final output directory
-RESULT_BASE_PATH="$ROOT/$SETTING/$RETRIEVAL_DIR/$TASK/$MODEL/$SOURCE"
-if [ -d "$RESULT_BASE_PATH" ]; then
-    summarize_folder "$RESULT_BASE_PATH"
-fi
 
 # --- FINAL SUMMARY TABLE (Paper Style) ---
 echo ""
@@ -126,25 +130,46 @@ echo "============================================================"
 printf "| %-12s | %-10s | %-10s | %-10s |\n" "Version" "EM (%)" "ES" "ID F1"
 echo "|--------------|------------|------------|------------|"
 
+TOTAL_EM=0
+TOTAL_ES=0
+TOTAL_F1=0
+VALID_COUNT=0
+
 for V in "${VERSIONS[@]}"; do
-    # Locate the specific score file
     FILE_NAME="task_${V}_enriched_doc_${V}_results.jsonl"
-    SCORE_FILE="$RESULT_BASE_PATH/$FILE_NAME"
+    # Recursive search ensures we find the file regardless of folder names
+    SCORE_FILE=$(find "$ROOT/$SETTING" -name "$FILE_NAME" | head -n 1)
     
-    if [ -f "$SCORE_FILE" ]; then
+    if [[ -n "$SCORE_FILE" && -f "$SCORE_FILE" ]]; then
         METRICS=$(python3 -c "
 import json
 with open('$SCORE_FILE') as f:
     d = json.load(f)
     print(f\"{d.get('em', 0.0):.2f}|{d.get('es', 0.0):.2f}|{d.get('id_f1', 0.0):.2f}\")
 ")
-        EM=$(echo $METRICS | cut -d'|' -f1)
-        ES=$(echo $METRICS | cut -d'|' -f2)
-        F1=$(echo $METRICS | cut -d'|' -f3)
+        EM=$(echo "$METRICS" | cut -d'|' -f1)
+        ES=$(echo "$METRICS" | cut -d'|' -f2)
+        F1=$(echo "$METRICS" | cut -d'|' -f3)
+
         printf "| %-12s | %-10s | %-10s | %-10s |\n" "$V" "$EM" "$ES" "$F1"
+        
+        TOTAL_EM=$(echo "$TOTAL_EM + $EM" | bc)
+        TOTAL_ES=$(echo "$TOTAL_ES + $ES" | bc)
+        TOTAL_F1=$(echo "$TOTAL_F1 + $F1" | bc)
+        VALID_COUNT=$((VALID_COUNT + 1))
     else
-        printf "| %-12s | %-10s | %-10s | %-10s |\n" "$V" "ERR" "ERR" "ERR"
+        printf "| %-12s | %-10s | %-10s | %-10s |\n" "$V" "MISSING" "MISSING" "MISSING"
     fi
 done
+
+if [ "$VALID_COUNT" -gt 0 ]; then
+    AVG_EM=$(echo "scale=2; $TOTAL_EM / $VALID_COUNT" | bc)
+    AVG_ES=$(echo "scale=2; $TOTAL_ES / $VALID_COUNT" | bc)
+    AVG_F1=$(echo "scale=2; $TOTAL_F1 / $VALID_COUNT" | bc)
+    
+    echo "|--------------|------------|------------|------------|"
+    printf "| %-12s | %-10s | %-10s | %-10s |\n" "AVERAGE" "$AVG_EM" "$AVG_ES" "$AVG_F1"
+fi
+
 echo "============================================================"
 echo "All evaluation runs finished."

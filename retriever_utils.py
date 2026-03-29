@@ -97,7 +97,7 @@ def setup_retrieval(use_retrieval: bool, retrieval_config: Dict, documents: List
 
     if retrieval_type == "codesage":
         retriever = CodeSageRetriever(
-            model_name=retrieval_config.get("retriever_model", "./codesage-small-v2"),
+            model_name=retrieval_config.get("retriever_model", "./codesage-large-v2"),
             batch_size=retrieval_config.get("retriever_batch_size", 2),
             max_seq_length=retrieval_config.get("retriever_max_seq_length", 256),
             device=retrieval_config.get("retriever_device", "cpu"),
